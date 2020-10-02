@@ -1,0 +1,25 @@
+# Import necessary packages and load `winequality_edited.csv`
+import pandas as pd
+import matplotlib.pyplot as plt
+% matplotlib inline
+
+df = pd.read_csv('winequality_edited.csv')
+df.head()
+
+
+# Use query to select each group and get its mean quality
+median = df['residual_sugar'].median()
+low = df.query('residual_sugar < {}'.format(median))
+high = df.query('residual_sugar >= {}'.format(median))
+
+mean_quality_low = low['quality'].mean()
+mean_quality_high = high['quality'].mean()
+
+# Create a bar chart with proper labels
+locations = [1, 2]
+heights = [mean_quality_low, mean_quality_high]
+labels = ['Low', 'High']
+plt.bar(locations, heights, tick_label=labels)
+plt.title('Average Quality Ratings by Residual Sugar')
+plt.xlabel('Residual Sugar Content')
+plt.ylabel('Average Quality Rating');
